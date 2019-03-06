@@ -21,7 +21,7 @@ sap.ui.define([],
 		              oRm.write(">");
                       oRm.write("<div style='display: flex; flex-direction: row; align-items: center; justify-content: space-around;'>");
                       oRm.write(
-                          "<video width='%w' height='%h' style='width: %pwpx; height: %phpx;'></video>"
+                          "<video playsInline width='%w' height='%h' style='width: %pwpx; height: %phpx;'></video>"
                               .replace("%w", oControl.getVideoWidth())
                               .replace("%h", oControl.getVideoHeight())
                               .replace("%pw", oControl.getWidth())
