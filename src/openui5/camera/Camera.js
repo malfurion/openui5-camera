@@ -117,11 +117,30 @@ function(jQuery, Control) {
     /**
     *
     */
-    stopCamera: function(){
+    stopCamera: function() {
       this._displayingVideo = false;
       if (this._stream){
         this._stream.getVideoTracks().forEach( function(t){ t.stop(); });
       }
+    },
+
+    startCamera: function() {
+      var that = this;
+      var oVideo = this._getVideo();
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" }, // Back camera
+        audio: false
+      })
+      .then(function(stream) {
+        // We have a camera. Let's store the stream for later use
+        that._stream = stream;
+        oVideo.srcObject = stream;
+        oVideo.play();
+        that._displayingVideo = true;
+      })
+      .catch(function(err) {
+        jQuery.sap.log.error("Problems accessing the camera: " + err);
+      });
     },
 
 
@@ -140,20 +159,7 @@ function(jQuery, Control) {
       if (oVideo && !this._displayingVideo) {
         // set the camera stream on the canvas.
         // Ask the user for camera access.
-        navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }, // Back camera
-          audio: false
-        })
-        .then(function(stream) {
-          // We have a camera. Let's store the stream for later use
-          that._stream = stream;
-          oVideo.srcObject = stream;
-          oVideo.play();
-          that._displayingVideo = true;
-        })
-        .catch(function(err) {
-          jQuery.sap.log.error("Problems accessing the camera: " + err);
-        });
+        this.startCamera();
       }
     }
   });
