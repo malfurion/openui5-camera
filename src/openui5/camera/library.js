@@ -19,6 +19,6 @@ sap.ui.define([
 		elements: []
 	});
 
-	return openui5.camera;
+	return me.malfurion.camera;
 
 }, /* bExport= */ false);
